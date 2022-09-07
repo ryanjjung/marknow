@@ -7,4 +7,5 @@ div.content {
   margin: auto;
   padding: 10px;
   border: 4px ridge #ddd;
+  border-radius: 8px;
 }

@@ -12,5 +12,7 @@ bp = Blueprint('monitor', __name__, url_prefix='/_')
 
 @bp.route('/ping', methods=['GET'])
 def ping():
-    '''Return a successful message to show the service is alive'''
+    '''Return a successful message to show the service is alive. To be used
+    as a health check.
+    '''
     return HTMLResponse(status=200, response=HTML)

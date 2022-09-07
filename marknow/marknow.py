@@ -1,5 +1,9 @@
 #!/bin/env python3
 
+'''A Flask server that renders Markdown files and provides a method for navigating
+these documents in a web browser.
+'''
+
 import logging
 import os
 
@@ -8,6 +12,8 @@ from flask import Flask
 from lib import monitor, renderer
 
 def parse_args():
+    '''Support the use of these command line arguments
+    '''
     parser = ArgumentParser(description='Serve browsable Markdown')
     parser.add_argument('directory',
         help='Path to the top level of Markdown files to serve')
@@ -27,7 +33,7 @@ def parse_args():
     return parser.parse_args()
 
 def create_app(directory, root, verbose):
-    '''Create the Marknow Flask application
+    '''Create the Marknow Flask application with various options set
     '''
 
     blueprints = [
@@ -47,6 +53,9 @@ def create_app(directory, root, verbose):
     return app
 
 def main():
+    '''Parse command line options and pass some of them into the Flask app
+    '''
+
     args = parse_args()
     app = create_app(args.directory, args.root, args.verbose)
     app.run(host=args.address, port=args.port, debug=args.verbose)
