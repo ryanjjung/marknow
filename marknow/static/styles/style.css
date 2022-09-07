@@ -1,0 +1,10 @@
+body {
+  font-family: Abyssinica SIL, serif;
+}
+
+div.content {
+  max-width: 800px;
+  margin: auto;
+  padding: 10px;
+  border: 4px ridge #ddd;
+}
