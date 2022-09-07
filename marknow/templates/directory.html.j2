@@ -1,0 +1,13 @@
+{% extends 'layout.html.j2' %}
+
+{% block content %}
+<ul>
+<li><a href="../">../</a></li>
+{% for dir in dirs %}
+<li><a href="{{ dir }}/">📂 {{ dir }}</a></li>
+{% endfor %}
+{% for file in files %}
+<li><a href="{{ file }}">🖹 {{ file }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}
