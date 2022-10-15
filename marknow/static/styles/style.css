@@ -11,7 +11,12 @@ div.content {
   border-radius: 8px;
 }
 
-table, td, tr {
+table, th, tr, td {
   border: 1px black solid;
   margin: auto;
+  text-align: center;
+}
+
+td, th {
+  padding: 4px;
 }
