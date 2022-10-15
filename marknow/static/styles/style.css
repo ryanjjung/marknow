@@ -1,5 +1,6 @@
 body {
   font-family: Abyssinica SIL, serif;
+  background-color: #ffe299;
 }
 
 div.content {
@@ -8,4 +9,9 @@ div.content {
   padding: 10px;
   border: 4px ridge #ddd;
   border-radius: 8px;
+}
+
+table, td, tr {
+  border: 1px black solid;
+  margin: auto;
 }

@@ -49,5 +49,5 @@ def serve_path(file_path):
     if not path.exists() or not path.is_file():
         return render_template('404.html.j2'), 404
     with open(path, 'r') as fh:
-        html = markdown(fh.read())
+        html = markdown(fh.read(), extensions=['tables'])
     return HTMLResponse(render_template('markdown.j2', html=html))
