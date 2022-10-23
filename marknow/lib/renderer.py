@@ -27,7 +27,10 @@ def get_directory_listing(dir):
 def redirect_root():
     '''Redirect calls to the URL root ("/") to the configured root document.
     '''
-    return redirect(app.config['ROOT_DOCUMENT'])
+    if app.config['ROOT_DOCUMENT']:
+        return redirect(app.config['ROOT_DOCUMENT'])
+    else:
+        return serve_dir('/')
 
 @bp.route('/<path:dir_path>/', methods=['GET'])
 def serve_dir(dir_path):

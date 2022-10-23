@@ -25,7 +25,7 @@ def parse_args():
         default=4037)
     parser.add_argument('-r', '--root',
         help='File to redirect calls to "/" to',
-        default='index.md')
+        default=None)
     parser.add_argument('-v', '--verbose',
         help='Enable verbose logging',
         default=False,

@@ -9,6 +9,7 @@ div.content {
   padding: 10px;
   border: 4px ridge #ddd;
   border-radius: 8px;
+  border-color: #000;
 }
 
 table, th, tr, td {
