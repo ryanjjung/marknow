@@ -2,7 +2,7 @@
 document root.
 '''
 
-from flask import Blueprint, current_app as app, redirect, render_template
+from flask import Blueprint, current_app as app, redirect, render_template, send_from_directory
 from lib import HTMLResponse
 from markdown import markdown
 from pathlib import Path
@@ -44,7 +44,7 @@ def serve_dir(dir_path):
     return render_template('directory.html.j2', dirs=dirs, files=files)
 
 @bp.route('/<path:file_path>.md', methods=['GET'])
-def serve_path(file_path):
+def render_path(file_path):
     '''Handle routes that indicate Markdown files in need of rendering
     '''
 
@@ -54,3 +54,25 @@ def serve_path(file_path):
     with open(path, 'r') as fh:
         html = markdown(fh.read(), extensions=['tables'])
     return HTMLResponse(render_template('markdown.j2', html=html))
+
+@bp.route('/<path:file_path>')
+def serve_path_as_file(file_path):
+    '''Handle all other routes, treating them as files to deliver directly
+    '''
+
+    # Reject the request if the path being requested is above the project's path
+    path = Path(f"{app.config['DIRECTORY']}/{file_path}").resolve()
+    highest_path = Path(f"{app.config['DIRECTORY']}").resolve()
+    try:
+        path.relative_to(highest_path)
+    except ValueError:
+        return render_template('400.html.j2'), 400
+
+    # 404 if the file doesn't exist
+    print(path)
+    if not path.exists() or not path.is_file():
+        return render_template('404.html.j2'), 404
+    
+    directory = Path('/'.join(path.parts[:-1])).resolve()
+    file = path.parts[-1]
+    return send_from_directory(directory, file)
