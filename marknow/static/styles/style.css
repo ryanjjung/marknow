@@ -21,3 +21,15 @@ table, th, tr, td {
 td, th {
   padding: 4px;
 }
+
+img {
+  max-width: 800px;
+  text-align: center;
+  border: 1px solid #000;
+  border-radius: 8px;
+}
+
+blockquote {
+  border-left: 4px solid #997700;
+  padding-left: 6px;
+}
