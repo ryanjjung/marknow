@@ -41,7 +41,7 @@ def serve_dir(dir_path):
     if not path.exists() or not path.is_dir():
         return render_template('404.html.j2'), 404
     dirs, files = get_directory_listing(path)
-    return render_template('directory.html.j2', dirs=dirs, files=files)
+    return render_template('directory.html.j2', dirs=dirs, files=files, style=app.config['STYLE'])
 
 @bp.route('/<path:file_path>.md', methods=['GET'])
 def render_path(file_path):
@@ -52,8 +52,8 @@ def render_path(file_path):
     if not path.exists() or not path.is_file():
         return render_template('404.html.j2'), 404
     with open(path, 'r') as fh:
-        html = markdown(fh.read(), extensions=['tables'])
-    return HTMLResponse(render_template('markdown.j2', html=html))
+        html = markdown(fh.read(), extensions=['md_in_html', 'tables'])
+    return HTMLResponse(render_template('markdown.j2', html=html, style=app.config['STYLE']))
 
 @bp.route('/<path:file_path>')
 def serve_path_as_file(file_path):

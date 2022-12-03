@@ -1,8 +1,12 @@
+{%- macro get_stylesheet() -%}
+  styles/{{ style }}.css
+{%- endmacro -%}
+
 <!DOCTYPE html>
 <html>
 <head>
   <title>{{request.path.split('/')[-1]}}</title>
-  <link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static',filename=get_stylesheet()) }}">
 </head>
 <body><div class="content">
 {% block content %}{% endblock %}

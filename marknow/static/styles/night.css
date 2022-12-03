@@ -1,0 +1,58 @@
+body {
+  font-family: "Droid Sans", serif;
+  background-color: #222;
+  color: #bbb;
+}
+
+div.content {
+  max-width: 800px;
+  margin: auto;
+  padding: 10px;
+}
+
+table, th, tr, td {
+  border: 1px #aaa solid;
+  border-spacing: 0;
+  margin: auto;
+  text-align: center;
+  padding: 0px;
+}
+
+td, th {
+  padding: 4px;
+  border: none;
+  border-left: 1px#888 solid;
+  border-top: 1px#888 solid;
+}
+
+.centered {
+  text-align: center;
+}
+
+img {
+  max-width: 700px;
+  margin: auto;
+  border: 1px solid #000;
+  border-radius: 8px;
+}
+
+blockquote {
+  border-left: 4px solid #70cfff;
+  padding-left: 6px;
+}
+
+a:link {
+  color: #70cfff;
+}
+
+a:visited {
+  color: #ea70ff;
+}
+
+a:hover {
+  color: #a3e0ff;
+}
+
+a:active {
+  color: #a3e0ff;
+}

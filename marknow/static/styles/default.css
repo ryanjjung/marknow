@@ -1,0 +1,35 @@
+body {
+  font-family: Abyssinica SIL, serif;
+  background-color: #ffffff;
+}
+
+div.content {
+  max-width: 800px;
+  margin: auto;
+  padding: 10px;
+  border: 4px ridge #ddd;
+  border-radius: 8px;
+  border-color: #000;
+}
+
+table, th, tr, td {
+  border: 1px black solid;
+  margin: auto;
+  text-align: center;
+}
+
+td, th {
+  padding: 4px;
+}
+
+img {
+  max-width: 800px;
+  text-align: center;
+  border: 1px solid #000;
+  border-radius: 8px;
+}
+
+blockquote {
+  border-left: 4px solid #997700;
+  padding-left: 6px;
+}
