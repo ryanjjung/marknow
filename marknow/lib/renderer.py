@@ -30,32 +30,33 @@ def redirect_root():
     if app.config['ROOT_DOCUMENT']:
         return redirect(app.config['ROOT_DOCUMENT'])
     else:
-        return serve_dir('/')
+        return serve_path('/')
 
-@bp.route('/<path:dir_path>/', methods=['GET'])
-def serve_dir(dir_path):
+@bp.route('/<path:file_path>', methods=['GET'])
+def serve_path(file_path):
     '''Handle routes that indicate directories (not renderable files)
     '''
 
-    path = Path(f"{app.config['DIRECTORY']}/{dir_path}")
-    if not path.exists() or not path.is_dir():
+    path = Path(f"{app.config['DIRECTORY']}/{file_path}")
+    if not path.exists():
         return render_template('404.html.j2'), 404
-    dirs, files = get_directory_listing(path)
-    return render_template('directory.html.j2', dirs=dirs, files=files, style=app.config['STYLE'])
+    if path.is_dir():
+        dirs, files = get_directory_listing(path)
+        return render_template('directory.html.j2', dirs=dirs, files=files, style=app.config['STYLE'])
+    else:
+        return serve_path_as_file(path)
 
-@bp.route('/<path:file_path>.md', methods=['GET'])
-def render_path(file_path):
+def render_path(path):
     '''Handle routes that indicate Markdown files in need of rendering
     '''
 
-    path = Path(f"{app.config['DIRECTORY']}/{file_path}.md")
+    print(path)
     if not path.exists() or not path.is_file():
         return render_template('404.html.j2'), 404
     with open(path, 'r') as fh:
         html = markdown(fh.read(), extensions=['md_in_html', 'tables'])
     return HTMLResponse(render_template('markdown.j2', html=html, style=app.config['STYLE']))
 
-@bp.route('/<path:file_path>')
 def serve_path_as_file(file_path):
     '''Handle all other routes, treating them as files to deliver directly
     '''
@@ -69,9 +70,12 @@ def serve_path_as_file(file_path):
         return render_template('400.html.j2'), 400
 
     # 404 if the file doesn't exist
-    print(path)
     if not path.exists() or not path.is_file():
         return render_template('404.html.j2'), 404
+
+    # Render Markdown files
+    if file_path.parts[-1][-3:] == '.md':
+        return render_path(file_path)
     
     directory = Path('/'.join(path.parts[:-1])).resolve()
     file = path.parts[-1]
