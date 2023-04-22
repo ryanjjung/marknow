@@ -2,7 +2,12 @@
 document root.
 '''
 
-from flask import Blueprint, current_app as app, redirect, render_template, send_from_directory
+from flask import Blueprint, \
+    current_app as app, \
+    redirect, \
+    request, \
+    render_template, \
+    send_from_directory
 from lib import HTMLResponse
 from markdown import markdown
 from pathlib import Path
@@ -44,9 +49,10 @@ def serve_path(file_path):
         dirs, files = get_directory_listing(path)
         return render_template('directory.html.j2', dirs=dirs, files=files, style=app.config['STYLE'])
     else:
-        return serve_path_as_file(path)
+        refresh_seconds = request.args['refresh'] if 'refresh' in request.args else None
+        return serve_path_as_file(path, refresh_seconds)
 
-def render_path(path):
+def render_path(path, refresh_seconds=None):
     '''Handle routes that indicate Markdown files in need of rendering
     '''
 
@@ -55,9 +61,12 @@ def render_path(path):
         return render_template('404.html.j2'), 404
     with open(path, 'r') as fh:
         html = markdown(fh.read(), extensions=['md_in_html', 'tables'])
-    return HTMLResponse(render_template('markdown.j2', html=html, style=app.config['STYLE']))
+    return HTMLResponse(render_template('markdown.j2',
+        html=html,
+        refresh_seconds=refresh_seconds,
+        style=app.config['STYLE']))
 
-def serve_path_as_file(file_path):
+def serve_path_as_file(file_path, refresh_seconds=None):
     '''Handle all other routes, treating them as files to deliver directly
     '''
 
@@ -75,7 +84,7 @@ def serve_path_as_file(file_path):
 
     # Render Markdown files
     if file_path.parts[-1][-3:] == '.md':
-        return render_path(file_path)
+        return render_path(file_path, refresh_seconds)
     
     directory = Path('/'.join(path.parts[:-1])).resolve()
     file = path.parts[-1]
