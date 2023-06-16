@@ -42,7 +42,7 @@ def serve_path(file_path):
     '''Handle routes that indicate directories (not renderable files)
     '''
 
-    path = Path(f"{app.config['DIRECTORY']}/{file_path}")
+    path = Path(f"{app.config['DIRECTORY']}/{file_path}").absolute()
     if not path.exists():
         return render_template('404.html.j2'), 404
     if path.is_dir():
@@ -56,7 +56,6 @@ def render_path(path, refresh_seconds=None):
     '''Handle routes that indicate Markdown files in need of rendering
     '''
 
-    print(path)
     if not path.exists() or not path.is_file():
         return render_template('404.html.j2'), 404
     with open(path, 'r') as fh:
@@ -71,21 +70,20 @@ def serve_path_as_file(file_path, refresh_seconds=None):
     '''
 
     # Reject the request if the path being requested is above the project's path
-    path = Path(f"{app.config['DIRECTORY']}/{file_path}").resolve()
-    highest_path = Path(f"{app.config['DIRECTORY']}").resolve()
+    highest_path = Path(f"{app.config['DIRECTORY']}").absolute()
     try:
-        path.relative_to(highest_path)
+        file_path.relative_to(highest_path)
     except ValueError:
         return render_template('400.html.j2'), 400
 
     # 404 if the file doesn't exist
-    if not path.exists() or not path.is_file():
+    if not file_path.exists() or not file_path.is_file():
         return render_template('404.html.j2'), 404
 
     # Render Markdown files
     if file_path.parts[-1][-3:] == '.md':
         return render_path(file_path, refresh_seconds)
     
-    directory = Path('/'.join(path.parts[:-1])).resolve()
-    file = path.parts[-1]
+    directory = Path('/'.join(file_path.parts[:-1])).resolve()
+    file = file_path.parts[-1]
     return send_from_directory(directory, file)
