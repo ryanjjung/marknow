@@ -1,6 +1,6 @@
 # marknow
 
-A server of browsable Markdown
+A lightweight server to browse a collection of Markdown files as a website.
 
 ## Usage
 

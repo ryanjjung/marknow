@@ -1,0 +1,33 @@
+[project]
+name = "marknow"
+description = "A lightweight server to browse a collection of Markdown files as a website."
+version = "0.1"
+readme = "README.md"
+authors = [
+    {name="Ryan Jung", email="ryanjjung@gmail.com"}
+]
+keywords = ["markdown", "server", "webpage", "website"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Framework :: Flask",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+    "Topic :: Text Processing :: Markup :: HTML",
+    "Topic :: Text Processing :: Markup :: Markdown",
+]
+requires-python = ">=3.13"
+dependencies = [
+    "Flask>=3,<4",
+    "Markdown>=3.8"
+]
+
+[project.urls]
+repository = "https://github.com/ryanjjung/marknow"
+issues = "https://github.com/ryanjjung/marknow/issues"
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.11,<1"
+]
