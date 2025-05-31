@@ -1,1 +1,1 @@
-# This is a Python module.
+from marknow.main import main
