@@ -44,17 +44,22 @@ def parse_args():
     return parser.parse_args()
 
 
+def setup_logging(verbose: bool = False):
+    logging.basicConfig(level=logging.DEBUG if verbose else logging.INFO)
+
+
 def create_app(directory, root, style, verbose):
     """Create the Marknow Flask application with various options set"""
 
+    setup_logging(verbose=verbose)
     blueprints = [monitor.bp, renderer.bp]
-    app = Flask(__name__)
+    template_dir = Path.cwd() / 'marknow/templates'
+    static_folder = Path.cwd() / 'marknow/static'
+    app = Flask(__name__, template_folder=template_dir, static_folder=static_folder)
     app.logger.debug('New app created')
     app.config['DIRECTORY'] = os.environ.get('MARKDOWN_DIRECTORY', directory)
     app.config['ROOT_DOCUMENT'] = os.environ.get('MARKNOW_ROOT_DOCUMENT', root)
     app.config['STYLE'] = os.environ.get('STYLE', style)
-    if verbose:
-        app.logger.setLevel(logging.DEBUG)
     app.logger.debug('App configured')
     for bp in blueprints:
         app.register_blueprint(bp)
