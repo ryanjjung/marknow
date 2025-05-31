@@ -1,1 +1,1 @@
-from marknow.main import main
+from marknow.main import main as main
