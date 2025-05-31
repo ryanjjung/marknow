@@ -45,8 +45,6 @@ def redirect_root():
 def serve_path(file_path):
     """Handle routes that indicate directories (not renderable files)"""
 
-    app.logger.info(f'DEBUG -- Serving file_path: {file_path}')
-
     path = Path(f'{app.config["DIRECTORY"]}/{file_path}').absolute()
     if not path.exists():
         return render_template('404.html.j2'), 404
