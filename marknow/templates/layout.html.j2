@@ -6,7 +6,7 @@
 <html>
 <head>
   <title>{{request.path.split('/')[-1]}}</title>
-{% if refresh_seconds != None %}
+{%- if refresh_seconds != None %}
   <meta http-equiv="refresh" content="{{refresh_seconds}}" />
 {% endif %}
   <link rel="stylesheet" href="{{ url_for('static',filename=get_stylesheet()) }}">
