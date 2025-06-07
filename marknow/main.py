@@ -55,7 +55,7 @@ def setup_logging(verbose: bool = False):
     logging.basicConfig(level=logging.DEBUG if verbose else logging.INFO)
 
 
-def create_app(directory, root, style, all_styles, verbose, disable_refresh):
+def create_app(directory, root, style, verbose, disable_refresh):
     """Create the Marknow Flask application with various options set"""
 
     setup_logging(verbose=verbose)
@@ -64,7 +64,6 @@ def create_app(directory, root, style, all_styles, verbose, disable_refresh):
     static_folder = Path.cwd() / 'marknow/static'
     app = Flask(__name__, template_folder=template_dir, static_folder=static_folder)
     app.logger.debug('New app created')
-    app.config['ALL_STYLES'] = all_styles
     app.config['DIRECTORY'] = os.environ.get('MN_MARKDOWN_DIRECTORY', directory)
     app.config['DISABLE_REFRESH'] = disable_refresh
     app.config['ROOT_DOCUMENT'] = os.environ.get('MN_ROOT_DOCUMENT', root)
@@ -80,8 +79,7 @@ def main():
     """Parse command line options and pass some of them into the Flask app"""
 
     args = parse_args()
-    all_styles = __get_styles()
-    app = create_app(args.directory, args.root, args.style, all_styles, args.verbose, args.disable_refresh)
+    app = create_app(args.directory, args.root, args.style, args.verbose, args.disable_refresh)
     app.run(host=args.address, port=args.port, debug=args.verbose)
 
 
