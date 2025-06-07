@@ -32,25 +32,6 @@ def get_directory_listing(dir: str) -> tuple[str, str]:
     return sorted(dirs), sorted(files)
 
 
-def get_query() -> str:
-    """
-    Returns an ideal query string given the inputs and server-side configuration.
-    """
-
-    query_params = {}
-    refresh_seconds = get_refresh()
-    if refresh_seconds:
-        query_params['refresh'] = refresh_seconds
-    style = get_style()
-    if style != app.config['STYLE']:
-        query_params['style'] = style
-    if len(query_params) > 0:
-        query_str = '&'.join([f'{key}={value}' for key, value in query_params.items()])
-        return f'?{query_str}'
-    else:
-        return ''
-
-
 def get_refresh() -> int:
     """
     Returns the user's preference for a refresh period in seconds, or None if no refresh is set.
@@ -106,7 +87,6 @@ def serve_path(file_path):
             'directory.html.j2',
             dirs=dirs,
             files=files,
-            query=get_query(),
             refresh_seconds=get_refresh(),
             style=get_style(),
         )
@@ -131,7 +111,6 @@ def render_path(path):
             all_styles=app.config['ALL_STYLES'],
             default_style=app.config['STYLE'],
             html=html,
-            query=get_query(),
             refresh_seconds=get_refresh(),
             style=get_style(),
         )

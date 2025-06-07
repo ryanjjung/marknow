@@ -4,10 +4,10 @@
 <ul>
 <li><a href="../">../</a></li>
 {% for dir in dirs %}
-<li><a href="{{ dir }}/{{ query }}">📂 {{ dir }}</a></li>
+<li><a href="{{ dir }}/">📂 {{ dir }}</a></li>
 {% endfor %}
 {% for file in files %}
-<li><a href="{{ file }}{{ query }}">🖹 {{ file }}</a></li>
+<li><a href="{{ file }}">🖹 {{ file }}</a></li>
 {% endfor %}
 </ul>
 {% endblock %}
