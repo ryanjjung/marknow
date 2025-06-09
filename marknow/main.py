@@ -1,27 +1,34 @@
 #!/bin/env python3
 
-"""A Flask server that renders Markdown files and provides a method for navigating
-these documents in a web browser.
+"""
+A Flask server that renders Markdown files and provides a method for navigating these documents in a web browser.
 """
 
 import logging
 import os
 
-from argparse import ArgumentParser
+from argparse import ArgumentParser, Namespace
 from flask import Flask
 from marknow.lib import monitor, renderer
 from pathlib import Path
 
 
-def __get_styles():
-    styles_path = Path.cwd() / 'marknow' / 'static' / 'styles'
+def __get_styles() -> list[str]:
+    """
+    Returns a list of available stylesheets.
+    """
+
+    styles_path: Path = Path.cwd() / 'marknow' / 'static' / 'styles'
     return [
         ''.join(file.split('.')[:-1]) for file in [path.name for path in styles_path.glob('*.css') if path.is_file()]
     ]
 
 
-def parse_args():
-    """Support the use of these command line arguments"""
+def parse_args() -> Namespace:
+    """
+    Support the use of these command line arguments
+    """
+
     parser = ArgumentParser(description='Serve browsable Markdown')
     parser.add_argument('directory', help='Path to the top level of Markdown files to serve')
     parser.add_argument('-a', '--address', help='Bind address', default='127.0.0.1')
@@ -55,8 +62,10 @@ def setup_logging(verbose: bool = False):
     logging.basicConfig(level=logging.DEBUG if verbose else logging.INFO)
 
 
-def create_app(directory, root, style, verbose, disable_refresh):
-    """Create the Marknow Flask application with various options set"""
+def create_app(directory: str, root: str, style: str, verbose: bool, disable_refresh: bool) -> Flask:
+    """
+    Create the Marknow Flask application with various options set.
+    """
 
     setup_logging(verbose=verbose)
     blueprints = [monitor.bp, renderer.bp]
@@ -76,7 +85,9 @@ def create_app(directory, root, style, verbose, disable_refresh):
 
 
 def main():
-    """Parse command line options and pass some of them into the Flask app"""
+    """
+    Parse command line options and pass some of them into the Flask app.
+    """
 
     args = parse_args()
     app = create_app(args.directory, args.root, args.style, args.verbose, args.disable_refresh)

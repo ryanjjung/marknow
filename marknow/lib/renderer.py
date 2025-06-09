@@ -1,5 +1,5 @@
-"""Handle routes related to rendering Markdown or listing files in the
-document root.
+"""
+Handle routes related to rendering Markdown or listing files in the document root.
 """
 
 from flask import (
@@ -8,6 +8,7 @@ from flask import (
     redirect,
     request,
     render_template,
+    Response,
     send_from_directory,
 )
 from marknow.lib import HTMLResponse
@@ -57,7 +58,7 @@ def get_style() -> str:
 
 
 @bp.route('/', methods=['GET'])
-def handle_root():
+def handle_root() -> Response:
     """
     Redirect calls to the URL root ("/") to the configured root document, or else render the root directory listing.
     """
@@ -69,13 +70,15 @@ def handle_root():
 
 
 @bp.route('/<path:file_path>', methods=['GET'])
-def serve_path(file_path):
+def serve_path(file_path: str) -> Response:
     """
     Handle all other routes, handling the URL path as a file path relative to the app's DIRECTORY config option. Renders
     routes differently depending on what type of file they refer to.
     """
 
+    # Get the absolute path to the requested file
     path = Path(f'{app.config["DIRECTORY"]}/{file_path}').absolute()
+
     # Nonexistent files get a 404
     if not path.exists():
         return render_template('404.html.j2'), 404
@@ -96,7 +99,7 @@ def serve_path(file_path):
         return serve_path_as_file(path)
 
 
-def render_path(path):
+def render_path(path: str) -> Response:
     """
     Respond to requests for Markdown documents by rendering them to HTML.
     """
@@ -117,7 +120,7 @@ def render_path(path):
     )
 
 
-def serve_path_as_file(file_path):
+def serve_path_as_file(file_path: str) -> Response:
     """
     Serve up the requested file. If it's a Markdown file, render it to HTML first.
     """

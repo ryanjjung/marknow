@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, Response
 from marknow.lib import HTMLResponse
 
 HTML = """<!DOCTYPE html>
@@ -12,7 +12,7 @@ bp = Blueprint('monitor', __name__, url_prefix='/_')
 
 
 @bp.route('/ping', methods=['GET'])
-def ping():
+def ping() -> Response:
     """Return a successful message to show the service is alive. To be used
     as a health check.
     """
