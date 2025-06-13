@@ -12,6 +12,8 @@ With **bold text** and _italic text_.
 
 With [links](page2.md).
 
+> And block quotes!
+
 
 #### And Tables
 
@@ -19,3 +21,9 @@ With [links](page2.md).
 | -------- | -------- |
 | A Value  | B Value  |
 | Another  | Bnother  |
+
+
+##### Preformatted Text
+
+    #!/bin/bash
+    echo 'Hello, world!'

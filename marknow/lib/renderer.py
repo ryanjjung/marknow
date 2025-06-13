@@ -85,14 +85,17 @@ def serve_path(file_path: str) -> Response:
 
     # Directories get a special page that lists the contents
     if path.is_dir():
-        dirs, files = get_directory_listing(path)
-        return render_template(
-            'directory.html.j2',
-            dirs=dirs,
-            files=files,
-            refresh_seconds=get_refresh(),
-            style=get_style(),
-        )
+        if not app.config['DISABLE_DIR_LIST']:
+            dirs, files = get_directory_listing(path)
+            return render_template(
+                'directory.html.j2',
+                dirs=dirs,
+                files=files,
+                refresh_seconds=get_refresh(),
+                style=get_style(),
+            )
+        else:
+            return render_template('404.html.j2'), 404
 
     # All other paths get served as files
     else:
@@ -111,7 +114,6 @@ def render_path(path: str) -> Response:
     return HTMLResponse(
         render_template(
             'markdown.j2',
-            all_styles=app.config['ALL_STYLES'],
             default_style=app.config['STYLE'],
             html=html,
             refresh_seconds=get_refresh(),

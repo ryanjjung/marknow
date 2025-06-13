@@ -1,0 +1,75 @@
+body {
+  font-family: 'Deja Vu Serif', serif;
+  background-color: #340765;
+  color: #25f212;
+}
+
+div.content {
+  max-width: 1000px;
+  margin: auto;
+  padding: 10px;
+}
+
+table, th, tr, td {
+  border: 0px#507d4c solid;
+  border-right: 1px #25f212 solid;
+  border-bottom: 1px #25f212 solid;
+  border-spacing: 0;
+  margin: auto;
+  text-align: center;
+  padding: 0px;
+}
+
+td, th {
+  padding: 4px;
+  border: none;
+  border-left: 1px#507d4c solid;
+  border-top: 1px#507d4c solid;
+}
+
+.centered {
+  text-align: center;
+}
+
+img {
+  max-width: 850px;
+  margin: auto;
+  border: 1px solid #25f212;
+}
+
+blockquote {
+  border-left: 4px solid #96e4a8;
+  padding-left: 6px;
+}
+
+a:link {
+  color: #6eb766;
+}
+
+a:visited {
+  color: #51865d;
+}
+
+a:hover {
+  color: #8e1dc3;
+}
+
+a:active {
+  color: #b269e3;
+}
+
+pre {
+  margin-left: 40px;
+  margin-right: 40px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #8930ac;
+  color: #25f212;
+  border: 1px solid black;
+  border-radius: 4px 4px 0px 4px;
+  font-size: larger;
+  font-family: 'Droid Sans Mono';
+  font-weight: bold;
+}
