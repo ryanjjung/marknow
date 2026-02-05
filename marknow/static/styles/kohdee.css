@@ -69,7 +69,8 @@ pre {
   color: #25f212;
   border: 1px solid black;
   border-radius: 4px 4px 0px 4px;
-  font-size: larger;
-  font-family: 'Droid Sans Mono';
+  font-size: small;
+  font-family: 'Droid Sans Mono', monospace;
   font-weight: bold;
+  overflow: auto;
 }

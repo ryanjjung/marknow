@@ -66,6 +66,7 @@ pre {
   padding-right: 20px;
   background-color: #c8aa79;
   color: #5e4c10;
-  font-size: larger;
-  font-family: 'Droid Sans Mono'
+  font-size: small;
+  font-family: 'Droid Sans Mono', monospace;
+  overflow: auto;
 }

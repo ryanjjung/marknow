@@ -6,7 +6,7 @@ body {
 }
 
 div.content {
-  max-width: 500px;
+  max-width: 800px;
   margin: auto;
   padding: 10px;
 }
@@ -75,6 +75,7 @@ pre {
   padding-right: 20px;
   background-color: #000;
   color: #ccc;
-  font-size: larger;
-  font-family: 'Droid Sans Mono'
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: small;
+  overflow: auto;
 }
