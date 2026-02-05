@@ -110,7 +110,7 @@ def render_path(path: str) -> Response:
     if not path.exists() or not path.is_file():
         return render_template('404.html.j2'), 404
     with open(path, 'r') as fh:
-        html = markdown(fh.read(), extensions=['md_in_html', 'tables'])
+        html = markdown(fh.read(), extensions=['md_in_html', 'tables', 'fenced_code'])
     return HTMLResponse(
         render_template(
             'markdown.j2',

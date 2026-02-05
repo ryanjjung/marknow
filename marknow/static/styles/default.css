@@ -71,5 +71,6 @@ pre {
   border: 1px solid black;
   border-radius: 4px 4px 0px 4px;
   font-size: larger;
-  font-family: 'Droid Sans Mono'
+  font-family: 'Droid Sans Mono';
+  overflow: auto;
 }
